@@ -9,8 +9,8 @@ char* gettime(){
 	time(&t);
 	struct tm *tm_info = localtime(&t);
 
-	char* dateBuffer = (char*)malloc(20 * sizeof(char));
-	strftime(dateBuffer, 20, "%d.%m.%Y@%H:%M",tm_info);
+	char* dateBuffer = (char*)malloc(30 * sizeof(char));
+	strftime(dateBuffer, 30, "%d.%m.%Y@%H:%M.txt",tm_info);
 
 	return dateBuffer;
 }
@@ -36,9 +36,11 @@ int main(int argc, char** argv){
 		printf("\n");
 	}
 
-	char fileName[30] = "graph-";
+	char fileName[40] = "graph-";
 	strcat(fileName, gettime());
-	printf("%s", fileName);
+
+	FILE* graphFile = fopen(fileName, "w");
+	
 
 	free(neighbours);
 }
