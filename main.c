@@ -17,14 +17,18 @@ char* gettime(){
 
 int main(int argc, char** argv){
 	int vertex = atoi(argv[1]);
-	char* task = argv[2];
+	int userDefined = atoi(argv[2]);
+	int directional = atoi(argv[3]);
 	srand(time(NULL));
 
 	int* neighbours = (int*)malloc(vertex*vertex*sizeof(int));
 
 	for(int i = 0; i < vertex; i++){
 		for(int j = 0; j < vertex; j++){
-			neighbours[i * vertex + j] = round((double)rand()/RAND_MAX);
+			int *current_node = &neighbours[i * vertex + j];
+			*current_node = round((double)rand()/RAND_MAX);
+			int connection = neighbours[j * vertex + i];
+			if(!directional && connection == 1) *current_node = 0;
 		}
 	}
 
