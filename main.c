@@ -35,6 +35,23 @@ void cleanDoubleConnections(int* array, int sideLength){
 	}
 }
 
+void saveGraph(int* graph, int sideLength){
+	char fileName[40] = "graph-";
+	strcat(fileName, gettime());
+
+	FILE* graphFile = fopen(fileName, "w");
+	
+	for(int i = 0; i < sideLength; i++){
+		fprintf(graphFile, "%d ", i);
+		for(int j = 0; j < sideLength; j++){
+			fprintf(graphFile, "%d", graph[i * sideLength + j] * !(i == j));
+		}
+		fprintf(graphFile, "\n");
+	}
+
+	fclose(graphFile);
+}
+
 int main(int argc, char** argv){
 	int* inputs = getInput(argv[1], argv[2], argv[3]);
 	int vertex = inputs[0];
@@ -47,19 +64,7 @@ int main(int argc, char** argv){
 	generateGraphRepresentation(neighbours, vertex);
 	if(directional == 1) cleanDoubleConnections(neighbours, vertex);
 
-	char fileName[40] = "graph-";
-	strcat(fileName, gettime());
+	saveGraph(neighbours, vertex);
 
-	FILE* graphFile = fopen(fileName, "w");
-	
-	for(int i = 0; i < vertex; i++){
-		fprintf(graphFile, "%d ", i);
-		for(int j = 0; j < vertex; j++){
-			fprintf(graphFile, "%d", neighbours[i * vertex + j] * !(i == j));
-		}
-		fprintf(graphFile, "\n");
-	}
-
-	fclose(graphFile);
 	free(neighbours);
 }
