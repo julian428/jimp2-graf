@@ -5,6 +5,8 @@
 #include<string.h>
 #include "lib/userinput.h"
 
+#define SARG(n) ((argc > (n)) ? argv[(n)] : NULL) // zwraca podany argument jeżeli został podany
+
 char* gettime(){
 	time_t t;
 	time(&t);
@@ -53,7 +55,7 @@ void saveGraph(int* graph, int sideLength){
 }
 
 int main(int argc, char** argv){
-	int* inputs = getInput(argv[1], argv[2], argv[3]);
+	int* inputs = getInput(SARG(1), SARG(2), SARG(3));
 	int vertex = inputs[0];
 	int userDefined = inputs[1];
 	int directional = inputs[2];
