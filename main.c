@@ -16,6 +16,25 @@ char* gettime(){
 	return dateBuffer;
 }
 
+void generateGraphRepresentation(int* array, int sideLength){
+	for(int i = 0; i < sideLength; i++){
+		for(int j = 0; j < sideLength; j++){
+			int *current_node = &array[i * sideLength + j];
+			*current_node = round((double)rand()/RAND_MAX);
+		}
+	}
+}
+
+void cleanDoubleConnections(int* array, int sideLength){
+	for(int i = 0; i < sideLength; i++){
+		for(int j = 0; j < sideLength; j++){
+			int *current_node = &array[i * sideLength + j];
+			int connection = array[j * sideLength + i];
+			if(connection == 1) *current_node = 0;
+		}
+	}
+}
+
 int main(int argc, char** argv){
 	int* inputs = getInput(argv[1], argv[2], argv[3]);
 	int vertex = inputs[0];
@@ -25,15 +44,8 @@ int main(int argc, char** argv){
 	srand(time(NULL));
 
 	int* neighbours = (int*)malloc(vertex*vertex*sizeof(int));
-
-	for(int i = 0; i < vertex; i++){
-		for(int j = 0; j < vertex; j++){
-			int *current_node = &neighbours[i * vertex + j];
-			*current_node = round((double)rand()/RAND_MAX);
-			int connection = neighbours[j * vertex + i];
-			if(!directional && connection == 1) *current_node = 0;
-		}
-	}
+	generateGraphRepresentation(neighbours, vertex);
+	if(directional == 1) cleanDoubleConnections(neighbours, vertex);
 
 	char fileName[40] = "graph-";
 	strcat(fileName, gettime());
