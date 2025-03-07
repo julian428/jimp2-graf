@@ -41,5 +41,6 @@ int main(int argc, char** argv){
 		fprintf(graphFile, "\n");
 	}
 
+	fclose(graphFile);
 	free(neighbours);
 }
