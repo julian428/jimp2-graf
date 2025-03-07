@@ -15,7 +15,7 @@ int main(int argc, char** argv){
 	srand(time(NULL));
 
 	int* neighbours = (int*)malloc(vertex*vertex*sizeof(int));
-	generateGraphRepresentation(neighbours, vertex);
+	if(userDefined == 0) generateGraphRepresentation(neighbours, vertex);
 	if(directional == 1) cleanDoubleConnections(neighbours, vertex);
 
 	saveGraph(neighbours, vertex);
