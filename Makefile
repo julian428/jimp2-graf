@@ -6,7 +6,8 @@ SRC = main.c lib/utils.c lib/userinput.c lib/api.c
 OBJ = $(SRC:.c=.o)
 EXEC = graph
 
-all: $(EXEC)
+all: 
+	nix-shell --run "$(EXEC)"
 
 $(EXEC): $(OBJ)
 	$(CC) $(OBJ) -o $(EXEC) $(LDFLAGS)
