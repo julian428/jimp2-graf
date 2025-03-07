@@ -28,19 +28,18 @@ int main(int argc, char** argv){
 		}
 	}
 
-
-	for(int i = 0; i < vertex; i++){
-		for(int j = 0; j < vertex; j++){
-			printf("%d", neighbours[i * vertex + j]);
-		}
-		printf("\n");
-	}
-
 	char fileName[40] = "graph-";
 	strcat(fileName, gettime());
 
 	FILE* graphFile = fopen(fileName, "w");
 	
+	for(int i = 0; i < vertex; i++){
+		fprintf(graphFile, "%d ", i);
+		for(int j = 0; j < vertex; j++){
+			fprintf(graphFile, "%d", neighbours[i * vertex + j]);
+		}
+		fprintf(graphFile, "\n");
+	}
 
 	free(neighbours);
 }
