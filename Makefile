@@ -2,7 +2,7 @@ CC = gcc
 CFLAGS = -Wextra -g
 LDFLAGS = -lm
 
-SRC = main.c
+SRC = main.c lib/*.c
 OBJ = $(SRC:.c=.o)
 EXEC = graph
 
