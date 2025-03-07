@@ -6,14 +6,13 @@ SRC = main.c lib/utils.c lib/userinput.c lib/api.c
 OBJ = $(SRC:.c=.o)
 EXEC = graph
 
-all: 
-	nix-shell --run "$(EXEC)"
+all: $(EXEC)
 
 $(EXEC): $(OBJ)
-	$(CC) $(OBJ) -o $(EXEC) $(LDFLAGS)
+	nix-shell --run "$(CC) $(OBJ) -o $(EXEC) $(LDFLAGS)"
 
 %.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+	nix-shell --run "$(CC) $(CFLAGS) -c $< -o $@"
 
 clean:
 	rm -rf *.txt $(OBJ) $(EXEC)
