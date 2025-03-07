@@ -1,10 +1,12 @@
 #include<stdlib.h>
 #include<stdio.h>
 #include<math.h>
+#include<time.h>
 
 int main(int argc, char** argv){
 	int vertex = atoi(argv[1]);
 	char* polecenie = argv[2];
+	srand(time(NULL));
 
 	int* neighbours = (int*)malloc(vertex*vertex*sizeof(int));
 
