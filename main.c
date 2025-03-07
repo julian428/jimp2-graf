@@ -3,6 +3,7 @@
 
 #include "lib/userinput.h"
 #include "lib/utils.h"
+#include "lib/api.h"
 
 #define SARG(n) ((argc > (n)) ? argv[(n)] : NULL) // zwraca podany argument jeżeli został podany
 
@@ -11,6 +12,7 @@ int main(int argc, char** argv){
 	int vertex = inputs[0];
 	int userDefined = inputs[1];
 	int directional = inputs[2];
+	getGraphFromLLM("test");
 
 	srand(time(NULL));
 
