@@ -3,6 +3,7 @@
 #include<math.h>
 #include<time.h>
 #include<string.h>
+#include "lib/userinput.h"
 
 char* gettime(){
 	time_t t;
@@ -16,9 +17,11 @@ char* gettime(){
 }
 
 int main(int argc, char** argv){
-	int vertex = atoi(argv[1]);
-	int userDefined = atoi(argv[2]);
-	int directional = atoi(argv[3]);
+	int* inputs = getInput(argv[1], argv[2], argv[3]);
+	int vertex = inputs[0];
+	int userDefined = inputs[1];
+	int directional = inputs[2];
+
 	srand(time(NULL));
 
 	int* neighbours = (int*)malloc(vertex*vertex*sizeof(int));
