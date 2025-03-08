@@ -5,13 +5,13 @@
    - [x] Graf może być dwukierunkowy (skierowany).
    - [x] Z danego wierzchołka może wychodzić dowolna liczba krawędzi.
 
-- [ ] **2 rodzaje komunikacji człowiek-komputer:**+
+- [x] **2 rodzaje komunikacji człowiek-komputer:**+
 
    - [x] Podajemy parametry po uruchomieniu programu w sposób uporządkowany:
       - [x] ile wierzchołków,
       - [x] czy graf ma być losowy, czy określony przez użytkownika.
 
-   - [ ] Parametry określamy na podstawie rozmowy z czatem, np.:
+   - [x] Parametry określamy na podstawie rozmowy z czatem, np.:
       - "Stwórz graf z 5 wierzchołkami."
 
 - [ ] **Możliwe są 2 podejścia do generowania grafu:**
