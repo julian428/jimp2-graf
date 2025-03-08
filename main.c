@@ -26,7 +26,6 @@ int main(int argc, char** argv){
 	if(userDefined == 0) generateGraphRepresentation(neighbours, vertex);
 	else getGraphFromUser(neighbours, vertex);
 
-	printf("directional: %d\n", directional);
 	if(directional == 1) cleanDoubleConnections(neighbours, vertex);
 
 	saveGraph(neighbours, vertex);
