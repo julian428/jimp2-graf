@@ -134,3 +134,7 @@ char* combineStringArray(char** strings, int length){
 
 	return combinedString;
 }
+
+int convertBoolToInt(char* bool){
+	return strcmp("true", bool);
+}

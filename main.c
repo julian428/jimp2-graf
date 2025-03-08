@@ -15,7 +15,7 @@ int main(int argc, char** argv){
 		char* userPrompt = combineStringArray(&argv[1], argc-1);
 		char* jsonBody = getJSONFromFile("data/request.json");
 		char* modifiedJSON = modifyMessageContent(jsonBody, userPrompt);
-		queryLLM(modifiedJSON);
+		char* jsonResponse = queryLLM(modifiedJSON);
 		return 0;
 	}
 

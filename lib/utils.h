@@ -16,5 +16,6 @@ int isNumber(char*);
 char* getJSONFromFile(char*);
 char* modifyMessageContent(char*, char*);
 char* combineStringArray(char**, int);
+int convertBoolToInt(char*);
 
 #endif
