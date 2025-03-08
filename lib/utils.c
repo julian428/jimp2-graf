@@ -55,3 +55,22 @@ int isNumber(char* s){
 	}
 	return 1;
 }
+
+char* getJSONFromFile(char* fileName){
+	FILE* jsonFile = fopen(fileName, "rb");
+	if(!jsonFile){
+		perror("Nie udało się otworzyć pliku z zapytaniem.");
+		return NULL;
+	}
+
+	fseek(jsonFile, 0, SEEK_END);
+	long fileSize = ftell(jsonFile);
+	rewind(jsonFile);
+
+	char* buffer = (char*)malloc(fileSize + 1);
+	fread(buffer, 1, fileSize, jsonFile);
+	buffer[fileSize] = '\0';
+
+	fclose(jsonFile);
+	return buffer;
+}

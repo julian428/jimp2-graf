@@ -12,5 +12,6 @@ void generateGraphRepresentation(int*, int);
 void cleanDoubleConnections(int*, int);
 void saveGraph(int*, int);
 int isNumber(char*);
+char* getJSONFromFile(char*);
 
 #endif
