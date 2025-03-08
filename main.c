@@ -22,7 +22,10 @@ int main(int argc, char** argv){
 	srand(time(NULL));
 
 	int* neighbours = (int*)malloc(vertex*vertex*sizeof(int));
+
 	if(userDefined == 0) generateGraphRepresentation(neighbours, vertex);
+	else getGraphFromUser(neighbours, vertex);
+
 	if(directional == 1) cleanDoubleConnections(neighbours, vertex);
 
 	saveGraph(neighbours, vertex);

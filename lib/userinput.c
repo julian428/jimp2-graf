@@ -21,3 +21,6 @@ int* getInput(char* u_random, char* u_userDefined, char* u_directional){
 
 	return inputs;
 }
+
+void getGraphFromUser(int* array, int sideLength){
+}

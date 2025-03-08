@@ -5,5 +5,6 @@
 #include "utils.h"
 
 int* getInput(char*, char*, char*);
+void getGraphFromUser(int*, int);
 
 #endif
