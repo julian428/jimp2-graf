@@ -1,9 +1,7 @@
 #include "userinput.h"
 
-#include<stdio.h>
-
 int* getInput(char* u_random, char* u_userDefined, char* u_directional){
-	if(strlen(u_random) > 1 || strlen(u_userDefined) || strlen(u_directional)) return NULL;
+	if(!isNumber(u_random) || !isNumber(u_userDefined) || !isNumber(u_directional) > 1) return NULL;
 
 	int random, userDefined, directional;
 

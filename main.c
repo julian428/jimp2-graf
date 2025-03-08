@@ -9,7 +9,7 @@
 
 int main(int argc, char** argv){
 	int* inputs = getInput(SARG(1), SARG(2), SARG(3));
-	
+
 	if(inputs == NULL){
 		getGraphFromLLM("test");
 		return 0;
