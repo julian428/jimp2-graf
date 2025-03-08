@@ -1,31 +1,59 @@
 #include "api.h"
 
-char* queryLLM(char* jsonBody){
-	CURL* curl;
-	CURLcode res;
+size_t write_callback(void *ptr, size_t size, size_t nmemb, void *userdata) {
+    size_t real_size = size * nmemb;
+    struct ResponseBuffer *mem = (struct ResponseBuffer *)userdata;
 
-	curl_global_init(CURL_GLOBAL_ALL);
-	curl = curl_easy_init();
+    char *temp = realloc(mem->data, mem->size + real_size + 1);
+    if (temp == NULL) {
+        fprintf(stderr, "Not enough memory to store response\n");
+        return 0;
+    }
 
-	if(!curl){
-		curl_global_cleanup();
-		return NULL;
-	}
+    mem->data = temp;
+    memcpy(&(mem->data[mem->size]), ptr, real_size);
+    mem->size += real_size;
+    mem->data[mem->size] = '\0';  // Null-terminate string
 
-	curl_easy_setopt(curl, CURLOPT_URL, "http://localhost:11434/api/chat");
-	curl_easy_setopt(curl, CURLOPT_POST, 1L);
-	curl_easy_setopt(curl, CURLOPT_POSTFIELDS, jsonBody);
+    return real_size;
+}
+char* queryLLM(char* jsonBody) {
+    CURL *curl;
+    CURLcode res;
 
-	struct curl_slist* headers = NULL;
-	headers = curl_slist_append(headers, "Content-Type: application/json");
-	curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
+    struct ResponseBuffer response = {NULL, 0};  // Initialize response buffer
 
-	res = curl_easy_perform(curl);
+    curl_global_init(CURL_GLOBAL_ALL);
+    curl = curl_easy_init();
 
-	if(res != CURLE_OK)
-		fprintf(stderr, "LLM request failed: %s", curl_easy_strerror(res));
+    if (!curl) {
+        curl_global_cleanup();
+        return NULL;
+    }
 
-	curl_slist_free_all(headers);
-	curl_easy_cleanup(curl);
-	curl_global_cleanup();
+    curl_easy_setopt(curl, CURLOPT_URL, "http://localhost:11434/api/chat");
+    curl_easy_setopt(curl, CURLOPT_POST, 1L);
+    curl_easy_setopt(curl, CURLOPT_POSTFIELDS, jsonBody);
+
+    struct curl_slist *headers = NULL;
+    headers = curl_slist_append(headers, "Content-Type: application/json");
+    curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
+
+    // Set write function to capture response
+    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_callback);
+    curl_easy_setopt(curl, CURLOPT_WRITEDATA, (void *)&response);
+
+    res = curl_easy_perform(curl);
+
+    if (res != CURLE_OK) {
+        fprintf(stderr, "LLM request failed: %s\n", curl_easy_strerror(res));
+        free(response.data);  // Free memory if request fails
+        response.data = NULL;
+    }
+
+    curl_slist_free_all(headers);
+    curl_easy_cleanup(curl);
+    curl_global_cleanup();
+
+    return response.data;  // Caller must free() this
 }

@@ -15,8 +15,16 @@ int main(int argc, char** argv){
 		char* userPrompt = combineStringArray(&argv[1], argc-1);
 		char* jsonBody = getJSONFromFile("data/request.json");
 		char* modifiedJSON = modifyMessageContent(jsonBody, userPrompt);
-		queryLLM(modifiedJSON);
-		return 0;
+		char* jsonResponse = queryLLM(modifiedJSON);
+		char** responseValues = extractValuesFromJson(getMessageContent(jsonResponse));
+
+		int newVert = atoi(responseValues[0]);
+		int newDir = convertBoolToInt(responseValues[1]);
+		
+		inputs = (int*)malloc(3 * sizeof(int));
+		inputs[0] = newVert;
+		inputs[1] = 0;
+		inputs[2] = newDir;
 	}
 
 	int vertex = inputs[0];

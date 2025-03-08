@@ -113,6 +113,74 @@ char* modifyMessageContent(char *jsonString, char *newContent) {
 	return modifiedJsonString;
 }
 
+char* getMessageContent(const char* json_string) {
+	cJSON *json = cJSON_Parse(json_string);
+    if (!json) {
+        fprintf(stderr, "JSON parsing error: %s\n", cJSON_GetErrorPtr());
+        return NULL;
+    }
+
+    cJSON *message = cJSON_GetObjectItemCaseSensitive(json, "message");
+    if (!cJSON_IsObject(message)) {
+        fprintf(stderr, "JSON missing 'message' object.\n");
+        cJSON_Delete(json);
+        return NULL;
+    }
+
+    cJSON *content = cJSON_GetObjectItemCaseSensitive(message, "content");
+    if (!cJSON_IsString(content) || (content->valuestring == NULL)) {
+        fprintf(stderr, "JSON missing 'content' field.\n");
+        cJSON_Delete(json);
+        return NULL;
+    }
+
+    char *result = strdup(content->valuestring);
+
+    cJSON_Delete(json);
+    return result;
+}
+
+char** extractValuesFromJson(const char* json_string) {
+    char** response = malloc(2 * sizeof(char*));
+    if (!response) {
+        fprintf(stderr, "Memory allocation failed\n");
+        return NULL;
+    }
+
+    response[0] = NULL;
+    response[1] = NULL;
+
+    cJSON *json = cJSON_Parse(json_string);
+    if (!json) {
+        fprintf(stderr, "JSON parsing error: %s\n", cJSON_GetErrorPtr());
+        return response;
+    }
+
+    cJSON *vertesies = cJSON_GetObjectItemCaseSensitive(json, "vertesies");
+    if (cJSON_IsNumber(vertesies)) {
+        response[0] = malloc(20 * sizeof(char));
+        if (response[0]) {
+            snprintf(response[0], 20, "%d", vertesies->valueint);
+        }
+    } else {
+        fprintf(stderr, "Error: 'vertesies' is missing or not a number.\n");
+    }
+
+    cJSON *directional = cJSON_GetObjectItemCaseSensitive(json, "directional");
+    if (cJSON_IsBool(directional)) {
+        response[1] = malloc(6 * sizeof(char));
+        if (response[1]) {
+            snprintf(response[1], 6, "%s", directional->valueint ? "true" : "false");
+        }
+    } else {
+        fprintf(stderr, "Error: 'directional' is missing or not a boolean.\n");
+    }
+
+    cJSON_Delete(json);
+
+    return response;
+}
+
 char* combineStringArray(char** strings, int length){
 	int combinedLength = 1; // zaczyna się od jeden bo '\0'
 
@@ -133,4 +201,8 @@ char* combineStringArray(char** strings, int length){
 	}
 
 	return combinedString;
+}
+
+int convertBoolToInt(char* bool){
+	return strcmp("true", bool);
 }
