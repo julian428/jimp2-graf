@@ -1,0 +1,20 @@
+{
+  	"model": "deepseek-r1:1.5b",
+  	"messages": [{"role": "user", "content": "Create a nondirectional graph with 5 vertesies."}],
+  	"stream": false,
+  	"format": {
+    		"type": "object",
+    		"properties": {
+			"vertesies": {
+				"type": "integer"
+			},
+			"directional": {
+				"type": "boolean"
+			}
+		},
+		"required": [
+			"vertesies",
+			"directional"
+		]
+	}
+}

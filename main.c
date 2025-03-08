@@ -1,5 +1,6 @@
 #include<stdlib.h>
 #include<time.h>
+#include<stdio.h>
 
 #include "lib/userinput.h"
 #include "lib/utils.h"
@@ -11,8 +12,7 @@ int main(int argc, char** argv){
 	int* inputs = getInput(SARG(1), SARG(2), SARG(3));
 
 	if(inputs == NULL){
-		getJSONFromFile("../data/request.json");
-		queryLLM("{}");
+		queryLLM(getJSONFromFile("data/request.json"));
 		return 0;
 	}
 
