@@ -46,3 +46,12 @@ void saveGraph(int* graph, int sideLength){
 
 	fclose(graphFile);
 }
+
+int isNumber(char* s){
+	if (!s || *s == '\0') return 0;  // Empty or NULL string is invalid
+
+	for (int i = 0; s[i] != '\0'; i++) {
+		if (!isdigit((unsigned char)s[i])) return 0;
+	}
+	return 1;
+}
