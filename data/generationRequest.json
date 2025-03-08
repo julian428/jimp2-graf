@@ -1,0 +1,19 @@
+{
+  	"model": "jmcastagnetto/deepseek-r1-distill-llama-8b",
+  	"messages": [{"role": "user", "content": "Create a non directional graph with 3 edges."}],
+  	"stream": false,
+  	"format": {
+    		"type": "object",
+    		"properties": {
+			"graph": {
+				"type": "array",
+				"items": {
+					"type": "integer"
+				}
+			}
+		},
+		"required": [
+			"graph"
+		]
+	}
+}
