@@ -86,14 +86,14 @@ char* modifyMessageContent(char *jsonString, char *newContent) {
 
 	cJSON *messages = cJSON_GetObjectItem(json, "messages");
 	if (!cJSON_IsArray(messages)) {
-		printf("\"messages\" is not an array!\n");
+		perror("\"messages\" is not an array!\n");
 		cJSON_Delete(json);
 		return NULL;
 	}
 
 	cJSON *firstMessage = cJSON_GetArrayItem(messages, 0);
 	if (!firstMessage) {
-		printf("No messages found!\n");
+		perror("No messages found!\n");
 		cJSON_Delete(json);
 		return NULL;
 	}
@@ -102,7 +102,7 @@ char* modifyMessageContent(char *jsonString, char *newContent) {
 	if (contentField) {
 		cJSON_SetValuestring(contentField, newContent);
 	} else {
-		printf("\"content\" field not found!\n");
+		perror("\"content\" field not found!\n");
 		cJSON_Delete(json);
 		return NULL;
 	}

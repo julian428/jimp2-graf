@@ -12,7 +12,9 @@ int main(int argc, char** argv){
 	int* inputs = getInput(SARG(1), SARG(2), SARG(3));
 
 	if(inputs == NULL){
-		queryLLM(getJSONFromFile("data/request.json"));
+		char* modifiedJSON = modifyMessageContent(getJSONFromFile("data/request.json"), SARG(1));
+		printf("%s\n", modifiedJSON);
+		queryLLM(modifiedJSON);
 		return 0;
 	}
 
