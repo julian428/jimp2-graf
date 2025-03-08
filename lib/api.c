@@ -13,7 +13,7 @@ size_t write_callback(void *ptr, size_t size, size_t nmemb, void *userdata) {
     mem->data = temp;
     memcpy(&(mem->data[mem->size]), ptr, real_size);
     mem->size += real_size;
-    mem->data[mem->size] = '\0';  // Null-terminate string
+    mem->data[mem->size] = '\0';
 
     return real_size;
 }
@@ -21,7 +21,7 @@ char* queryLLM(char* jsonBody) {
     CURL *curl;
     CURLcode res;
 
-    struct ResponseBuffer response = {NULL, 0};  // Initialize response buffer
+    struct ResponseBuffer response = {NULL, 0};
 
     curl_global_init(CURL_GLOBAL_ALL);
     curl = curl_easy_init();
@@ -39,7 +39,6 @@ char* queryLLM(char* jsonBody) {
     headers = curl_slist_append(headers, "Content-Type: application/json");
     curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
 
-    // Set write function to capture response
     curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_callback);
     curl_easy_setopt(curl, CURLOPT_WRITEDATA, (void *)&response);
 
@@ -47,7 +46,7 @@ char* queryLLM(char* jsonBody) {
 
     if (res != CURLE_OK) {
         fprintf(stderr, "LLM request failed: %s\n", curl_easy_strerror(res));
-        free(response.data);  // Free memory if request fails
+        free(response.data);
         response.data = NULL;
     }
 
@@ -55,5 +54,5 @@ char* queryLLM(char* jsonBody) {
     curl_easy_cleanup(curl);
     curl_global_cleanup();
 
-    return response.data;  // Caller must free() this
+    return response.data;
 }
