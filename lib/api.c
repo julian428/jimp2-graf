@@ -4,7 +4,7 @@ int* getGraphFromLLM(char* prompt){
 	CURL* curl;
 	CURLcode res;
 
-	const char* jsonBody = "";
+	const char* jsonBody = "{\"model\": \"deepseek-r1:1.5b\"}";
 
 	curl_global_init(CURL_GLOBAL_ALL);
 	curl = curl_easy_init();
@@ -26,8 +26,6 @@ int* getGraphFromLLM(char* prompt){
 
 	if(res != CURLE_OK)
 		fprintf(stderr, "LLM request failed: %s", curl_easy_strerror(res));
-	else
-		printf("success");
 
 	curl_slist_free_all(headers);
 	curl_easy_cleanup(curl);
