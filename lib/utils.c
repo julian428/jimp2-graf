@@ -74,3 +74,63 @@ char* getJSONFromFile(char* fileName){
 	fclose(jsonFile);
 	return buffer;
 }
+
+char* modifyMessageContent(char *jsonString, char *newContent) {
+	cJSON *json = cJSON_Parse(jsonString);
+	free(jsonString);
+
+	if (!json) {
+		perror("Error parsing JSON!\n");
+		return NULL;
+	}
+
+	cJSON *messages = cJSON_GetObjectItem(json, "messages");
+	if (!cJSON_IsArray(messages)) {
+		perror("\"messages\" is not an array!\n");
+		cJSON_Delete(json);
+		return NULL;
+	}
+
+	cJSON *firstMessage = cJSON_GetArrayItem(messages, 0);
+	if (!firstMessage) {
+		perror("No messages found!\n");
+		cJSON_Delete(json);
+		return NULL;
+	}
+
+	cJSON *contentField = cJSON_GetObjectItem(firstMessage, "content");
+	if (contentField) {
+		cJSON_SetValuestring(contentField, newContent);
+	} else {
+		perror("\"content\" field not found!\n");
+		cJSON_Delete(json);
+		return NULL;
+	}
+
+	char *modifiedJsonString = cJSON_Print(json);
+	cJSON_Delete(json);
+
+	return modifiedJsonString;
+}
+
+char* combineStringArray(char** strings, int length){
+	int combinedLength = 1; // zaczyna się od jeden bo '\0'
+
+	for(int i = 0; i < length; i++){
+		combinedLength += strlen(strings[i]) + 1;
+	}
+
+	char* combinedString = (char*)malloc(combinedLength);
+	if(combinedString == NULL){
+		perror("Couldn't allocate memory for string.");
+		return NULL;
+	}
+
+	combinedString[0] = '\0';
+	for(int i = 0; i < length; i++){
+		strcat(combinedString, strings[i]);
+		if(i < length - 1) strcat(combinedString, " ");
+	}
+
+	return combinedString;
+}
