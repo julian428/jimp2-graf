@@ -121,7 +121,12 @@ char* combineStringArray(char** strings, int length){
 	}
 
 	char* combinedString = (char*)malloc(combinedLength);
-	combinedString = '\0';
+	if(combinedString == NULL){
+		perror("Couldn't allocate memory for string.");
+		return NULL;
+	}
+
+	combinedString[0] = '\0';
 	for(int i = 0; i < length; i++){
 		strcat(combinedString, strings[i]);
 		if(i < length - 1) strcat(combinedString, " ");

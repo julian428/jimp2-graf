@@ -12,8 +12,9 @@ int main(int argc, char** argv){
 	int* inputs = getInput(SARG(1), SARG(2), SARG(3));
 
 	if(inputs == NULL){
-		char* modifiedJSON = modifyMessageContent(getJSONFromFile("data/request.json"), SARG(1));
-		printf("%s\n", modifiedJSON);
+		char* userPrompt = combineStringArray(&argv[1], argc-1);
+		char* jsonBody = getJSONFromFile("data/request.json");
+		char* modifiedJSON = modifyMessageContent(jsonBody, userPrompt);
 		queryLLM(modifiedJSON);
 		return 0;
 	}
