@@ -15,5 +15,6 @@ void saveGraph(int*, int);
 int isNumber(char*);
 char* getJSONFromFile(char*);
 char* modifyMessageContent(char*, char*);
+char* combineStringArray(char**, int);
 
 #endif

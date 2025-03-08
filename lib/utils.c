@@ -112,3 +112,20 @@ char* modifyMessageContent(char *jsonString, char *newContent) {
 
 	return modifiedJsonString;
 }
+
+char* combineStringArray(char** strings, int length){
+	int combinedLength = 1; // zaczyna się od jeden bo '\0'
+
+	for(int i = 0; i < length; i++){
+		combinedLength += strlen(strings[i]) + 1;
+	}
+
+	char* combinedString = (char*)malloc(combinedLength);
+	combinedString = '\0';
+	for(int i = 0; i < length; i++){
+		strcat(combinedString, strings[i]);
+		if(i < length - 1) strcat(combinedString, " ");
+	}
+
+	return combinedString;
+}
