@@ -3,6 +3,6 @@
 #include<curl/curl.h>
 #include<stdio.h>
 
-int* getGraphFromLLM(char*);
+char* queryLLM(char*);
 
 #endif

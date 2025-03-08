@@ -1,10 +1,8 @@
 #include "api.h"
 
-int* getGraphFromLLM(char* prompt){
+char* queryLLM(char* jsonBody){
 	CURL* curl;
 	CURLcode res;
-
-	const char* jsonBody = "{\"model\": \"deepseek-r1:1.5b\"}";
 
 	curl_global_init(CURL_GLOBAL_ALL);
 	curl = curl_easy_init();
