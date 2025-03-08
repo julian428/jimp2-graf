@@ -1,6 +1,10 @@
 #include "userinput.h"
 
+#include<stdio.h>
+
 int* getInput(char* u_random, char* u_userDefined, char* u_directional){
+	if(strlen(u_random) > 1 || strlen(u_userDefined) || strlen(u_directional)) return NULL;
+
 	int random, userDefined, directional;
 
 	if(u_random) random = atoi(u_random);
