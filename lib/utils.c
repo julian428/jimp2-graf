@@ -181,6 +181,33 @@ char** extractValuesFromJson(const char* json_string) {
     return response;
 }
 
+void extractGraphArray(const char *jsonStr, int *array, int size) {
+    cJSON *json = cJSON_Parse(jsonStr);
+    if (!json) {
+        printf("Error parsing JSON\n");
+        return;
+    }
+
+    cJSON *graphArray = cJSON_GetObjectItem(json, "graph");
+    if (!cJSON_IsArray(graphArray)) {
+        printf("Graph is not an array\n");
+        cJSON_Delete(json);
+        return;
+    }
+
+    int arraySize = cJSON_GetArraySize(graphArray);
+    if (arraySize != size) {
+        printf("Warning: Expected size %d but found %d in JSON.\n", size, arraySize);
+    }
+
+    for (int i = 0; i < size && i < arraySize; i++) {
+        cJSON *item = cJSON_GetArrayItem(graphArray, i);
+        array[i] = item->valueint;
+    }
+
+    cJSON_Delete(json);
+}
+
 char* combineStringArray(char** strings, int length){
 	int combinedLength = 1; // zaczyna się od jeden bo '\0'
 

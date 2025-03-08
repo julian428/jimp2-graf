@@ -31,6 +31,8 @@ int main(int argc, char** argv){
 	int userDefined = inputs[1];
 	int directional = inputs[2];
 
+	int* neighbours = (int*)malloc(edge*edge*sizeof(int));
+
 	if(userDefined == 2){
 		char* graphCreationPrompt;
 		asprintf(&graphCreationPrompt, "Generate a one-dimensional binary adjacency array for an %d × %d grid graph, where index (r * X + c) represents an edge (1 for connected, 0 otherwise)", edge, edge);
@@ -39,14 +41,14 @@ int main(int argc, char** argv){
 		char* modifiedJSON = modifyMessageContent(jsonBody, graphCreationPrompt);
 
 		char* jsonResponse = queryLLM(modifiedJSON);
-		printf("%s\n", modifiedJSON);
-		printf("%s\n", jsonResponse);
+		extractGraphArray(getMessageContent(jsonResponse), neighbours, edge * edge);
+
+		saveGraph(neighbours, edge);
 		return 0;
 	}
 
 	srand(time(NULL));
 
-	int* neighbours = (int*)malloc(edge*edge*sizeof(int));
 
 	if(userDefined == 0) generateGraphRepresentation(neighbours, edge);
 	else getGraphFromUser(neighbours, edge);

@@ -18,6 +18,7 @@ char* modifyMessageContent(char*, char*);
 char* combineStringArray(char**, int);
 char* getMessageContent(const char*);
 char** extractValuesFromJson(const char*);
+void extractGraphArray(const char*, int*, int);
 int convertBoolToInt(char*);
 
 #endif
