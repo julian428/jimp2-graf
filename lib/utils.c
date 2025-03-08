@@ -74,3 +74,41 @@ char* getJSONFromFile(char* fileName){
 	fclose(jsonFile);
 	return buffer;
 }
+
+char* modifyMessageContent(char *jsonString, char *newContent) {
+	cJSON *json = cJSON_Parse(jsonString);
+	free(jsonString);
+
+	if (!json) {
+		perror("Error parsing JSON!\n");
+		return NULL;
+	}
+
+	cJSON *messages = cJSON_GetObjectItem(json, "messages");
+	if (!cJSON_IsArray(messages)) {
+		printf("\"messages\" is not an array!\n");
+		cJSON_Delete(json);
+		return NULL;
+	}
+
+	cJSON *firstMessage = cJSON_GetArrayItem(messages, 0);
+	if (!firstMessage) {
+		printf("No messages found!\n");
+		cJSON_Delete(json);
+		return NULL;
+	}
+
+	cJSON *contentField = cJSON_GetObjectItem(firstMessage, "content");
+	if (contentField) {
+		cJSON_SetValuestring(contentField, newContent);
+	} else {
+		printf("\"content\" field not found!\n");
+		cJSON_Delete(json);
+		return NULL;
+	}
+
+	char *modifiedJsonString = cJSON_Print(json);
+	cJSON_Delete(json);
+
+	return modifiedJsonString;
+}

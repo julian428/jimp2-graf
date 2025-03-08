@@ -1,6 +1,6 @@
 CC = gcc
 CFLAGS = -Wextra -g
-LDFLAGS = -lm -lcurl
+LDFLAGS = -lm -lcurl -lcjson
 
 SRC = main.c lib/utils.c lib/userinput.c lib/api.c
 OBJ = $(SRC:.c=.o)
