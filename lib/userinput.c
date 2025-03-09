@@ -41,7 +41,11 @@ void getGraphFromUser(int* array, int sideLength){
 			char* rest = line;
 
 			for(int j = 0; token != NULL; j++){
-				array[i * sideLength + j] = atoi(token);
+				int connection = atoi(token);
+				if(connection < 0) connection = 0;
+				if(connection > 1) connection = 1;
+
+				array[i * sideLength + j] = connection;
 				token = strtok(NULL, " ");
 			}
 		}
