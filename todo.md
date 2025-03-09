@@ -14,9 +14,9 @@
    - [x] Parametry określamy na podstawie rozmowy z czatem, np.:
       - "Stwórz graf z 5 wierzchołkami."
 
-- [ ] **Możliwe są 2 podejścia do generowania grafu:**
+- [x] **Możliwe są 2 podejścia do generowania grafu:**
    - [x] Ekstrakcja parametrów z danych wejściowych i generowanie grafu przy pomocy algorytmu.
-   - [ ] Generowanie grafu przy pomocy LLM (Large Language Model) i dostosowanie go do określonej reprezentacji.
+   - [x] Generowanie grafu przy pomocy LLM (Large Language Model) i dostosowanie go do określonej reprezentacji.
 
 - [ ] **Proszę zwrócić uwagę na walidację danych.**
 
