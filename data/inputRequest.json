@@ -1,5 +1,5 @@
 {
-  	"model": "deepseek-r1:1.5b",
+  	"model": "jmcastagnetto/deepseek-r1-distill-llama-8b",
   	"messages": [{"role": "user", "content": "Create a nondirectional graph with 5 vertesies."}],
   	"stream": false,
   	"format": {
