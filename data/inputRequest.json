@@ -5,7 +5,7 @@
   	"format": {
     		"type": "object",
     		"properties": {
-			"vertesies": {
+			"edges": {
 				"type": "integer"
 			},
 			"directional": {
