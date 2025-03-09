@@ -1,21 +1,25 @@
 #include "userinput.h"
 
-int* getInput(char* u_random, char* u_userDefined, char* u_directional){
-	if(!isNumber(u_random) || !isNumber(u_userDefined) || !isNumber(u_directional)) return NULL;
+int* getInput(char* u_edges, char* u_userDefined, char* u_directional){
+	if(!isNumber(u_edges) || !isNumber(u_userDefined) || !isNumber(u_directional)) return NULL;
 
-	int random, userDefined, directional;
+	int edges, userDefined, directional;
 
-	if(u_random) random = atoi(u_random);
-	else random = 1;
+	if(u_edges) edges = atoi(u_edges);
+	else edges = 1;
 
 	if(u_userDefined) userDefined = atoi(u_userDefined);
 	else userDefined = 0;
 
 	if(u_directional) directional = atoi(u_directional);
 	else directional = 1;
+
+	if(edges < 1) edges = 1;
+	if(userDefined < 0 || userDefined > 2) userDefined = 0;
+	if(directional != 0 || directional != 1) directional = 0;
 	
 	int* inputs = (int*)malloc(3*sizeof(int));
-	inputs[0] = random;
+	inputs[0] = edges;
 	inputs[1] = userDefined;
 	inputs[2] = directional;
 
