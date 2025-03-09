@@ -35,6 +35,10 @@ void saveGraph(int* graph, int sideLength){
 	strcat(fileName, gettime());
 
 	FILE* graphFile = fopen(fileName, "w");
+	if(graphFile == NULL){
+		perror("Couldn't create file %s", fileName);
+		return;
+	}
 	
 	for(int i = 0; i < sideLength; i++){
 		fprintf(graphFile, "%d ", i);
