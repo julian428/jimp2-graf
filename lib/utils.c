@@ -35,6 +35,10 @@ void saveGraph(int* graph, int sideLength){
 	strcat(fileName, gettime());
 
 	FILE* graphFile = fopen(fileName, "w");
+	if(graphFile == NULL){
+		perror("Couldn't create file");
+		return;
+	}
 	
 	for(int i = 0; i < sideLength; i++){
 		fprintf(graphFile, "%d ", i);
@@ -68,6 +72,10 @@ char* getJSONFromFile(char* fileName){
 	rewind(jsonFile);
 
 	char* buffer = (char*)malloc(fileSize + 1);
+	if(buffer == NULL){
+		perror("Couldn't allocate memory for buffer.");
+		return NULL;
+	}
 	fread(buffer, 1, fileSize, jsonFile);
 	buffer[fileSize] = '\0';
 
@@ -77,7 +85,6 @@ char* getJSONFromFile(char* fileName){
 
 char* modifyMessageContent(char *jsonString, char *newContent) {
 	cJSON *json = cJSON_Parse(jsonString);
-	free(jsonString);
 
 	if (!json) {
 		perror("Error parsing JSON!\n");
@@ -115,97 +122,97 @@ char* modifyMessageContent(char *jsonString, char *newContent) {
 
 char* getMessageContent(const char* json_string) {
 	cJSON *json = cJSON_Parse(json_string);
-    if (!json) {
-        fprintf(stderr, "JSON parsing error: %s\n", cJSON_GetErrorPtr());
-        return NULL;
-    }
+	if (!json) {
+		fprintf(stderr, "JSON parsing error: %s\n", cJSON_GetErrorPtr());
+		return NULL;
+	}
 
-    cJSON *message = cJSON_GetObjectItemCaseSensitive(json, "message");
-    if (!cJSON_IsObject(message)) {
-        fprintf(stderr, "JSON missing 'message' object.\n");
-        cJSON_Delete(json);
-        return NULL;
-    }
+	cJSON *message = cJSON_GetObjectItemCaseSensitive(json, "message");
+	if (!cJSON_IsObject(message)) {
+		fprintf(stderr, "JSON missing 'message' object.\n");
+		cJSON_Delete(json);
+		return NULL;
+	}
 
-    cJSON *content = cJSON_GetObjectItemCaseSensitive(message, "content");
-    if (!cJSON_IsString(content) || (content->valuestring == NULL)) {
-        fprintf(stderr, "JSON missing 'content' field.\n");
-        cJSON_Delete(json);
-        return NULL;
-    }
+	cJSON *content = cJSON_GetObjectItemCaseSensitive(message, "content");
+	if (!cJSON_IsString(content) || (content->valuestring == NULL)) {
+		fprintf(stderr, "JSON missing 'content' field.\n");
+		cJSON_Delete(json);
+		return NULL;
+	}
 
-    char *result = strdup(content->valuestring);
+	char *result = strdup(content->valuestring);
 
-    cJSON_Delete(json);
-    return result;
+	cJSON_Delete(json);
+	return result;
 }
 
 char** extractValuesFromJson(const char* json_string) {
-    char** response = malloc(2 * sizeof(char*));
-    if (!response) {
-        fprintf(stderr, "Memory allocation failed\n");
-        return NULL;
-    }
+	char** response = malloc(2 * sizeof(char*));
+	if (!response) {
+		fprintf(stderr, "Memory allocation failed\n");
+		return NULL;
+	}
 
-    response[0] = NULL;
-    response[1] = NULL;
+	response[0] = NULL;
+	response[1] = NULL;
 
-    cJSON *json = cJSON_Parse(json_string);
-    if (!json) {
-        fprintf(stderr, "JSON parsing error: %s\n", cJSON_GetErrorPtr());
-        return response;
-    }
+	cJSON *json = cJSON_Parse(json_string);
+	if (!json) {
+		fprintf(stderr, "JSON parsing error: %s\n", cJSON_GetErrorPtr());
+		return response;
+	}
 
-    cJSON *vertesies = cJSON_GetObjectItemCaseSensitive(json, "vertesies");
-    if (cJSON_IsNumber(vertesies)) {
-        response[0] = malloc(20 * sizeof(char));
-        if (response[0]) {
-            snprintf(response[0], 20, "%d", vertesies->valueint);
-        }
-    } else {
-        fprintf(stderr, "Error: 'vertesies' is missing or not a number.\n");
-    }
+	cJSON *vertesies = cJSON_GetObjectItemCaseSensitive(json, "vertesies");
+	if (cJSON_IsNumber(vertesies)) {
+		response[0] = malloc(20 * sizeof(char));
+		if (response[0]) {
+			snprintf(response[0], 20, "%d", vertesies->valueint);
+		}
+	} else {
+		fprintf(stderr, "Error: 'vertesies' is missing or not a number.\n");
+	}
 
-    cJSON *directional = cJSON_GetObjectItemCaseSensitive(json, "directional");
-    if (cJSON_IsBool(directional)) {
-        response[1] = malloc(6 * sizeof(char));
-        if (response[1]) {
-            snprintf(response[1], 6, "%s", directional->valueint ? "true" : "false");
-        }
-    } else {
-        fprintf(stderr, "Error: 'directional' is missing or not a boolean.\n");
-    }
+	cJSON *directional = cJSON_GetObjectItemCaseSensitive(json, "directional");
+	if (cJSON_IsBool(directional)) {
+		response[1] = malloc(6 * sizeof(char));
+		if (response[1]) {
+			snprintf(response[1], 6, "%s", directional->valueint ? "true" : "false");
+		}
+	} else {
+		fprintf(stderr, "Error: 'directional' is missing or not a boolean.\n");
+	}
 
-    cJSON_Delete(json);
+	cJSON_Delete(json);
 
-    return response;
+	return response;
 }
 
 void extractGraphArray(const char *jsonStr, int *array, int size) {
-    cJSON *json = cJSON_Parse(jsonStr);
-    if (!json) {
-        printf("Error parsing JSON\n");
-        return;
-    }
+	cJSON *json = cJSON_Parse(jsonStr);
+	if (!json) {
+		printf("Error parsing JSON\n");
+		return;
+	}
 
-    cJSON *graphArray = cJSON_GetObjectItem(json, "graph");
-    if (!cJSON_IsArray(graphArray)) {
-        printf("Graph is not an array\n");
-        cJSON_Delete(json);
-        return;
-    }
+	cJSON *graphArray = cJSON_GetObjectItem(json, "graph");
+	if (!cJSON_IsArray(graphArray)) {
+		printf("Graph is not an array\n");
+		cJSON_Delete(json);
+		return;
+	}
 
-    int arraySize = cJSON_GetArraySize(graphArray);
-    if (arraySize != size) {
-        printf("Warning: Expected size %d but found %d in JSON.\n", size, arraySize);
-    }
+	int arraySize = cJSON_GetArraySize(graphArray);
+	if (arraySize != size) {
+		printf("Warning: Expected size %d but found %d in JSON.\n", size, arraySize);
+	}
 
-    for (int i = 0; i < size && i < arraySize; i++) {
-        cJSON *item = cJSON_GetArrayItem(graphArray, i);
-        array[i] = item->valueint;
-    }
+	for (int i = 0; i < size && i < arraySize; i++) {
+		cJSON *item = cJSON_GetArrayItem(graphArray, i);
+		array[i] = item->valueint;
+	}
 
-    cJSON_Delete(json);
+	cJSON_Delete(json);
 }
 
 char* combineStringArray(char** strings, int length){

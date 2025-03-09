@@ -6,7 +6,7 @@
 #include "lib/utils.h"
 #include "lib/api.h"
 
-#define SARG(n) ((argc > (n)) ? argv[(n)] : NULL) // zwraca podany argument jeżeli został podany
+#define SARG(n) ((argc > (n)) ? argv[(n)] : "1") // zwraca podany argument jeżeli został podany
 
 int main(int argc, char** argv){
 	int* inputs = getInput(SARG(1), SARG(2), SARG(3));
@@ -15,11 +15,16 @@ int main(int argc, char** argv){
 		char* userPrompt = combineStringArray(&argv[1], argc-1);
 		char* jsonBody = getJSONFromFile("data/inputRequest.json");
 		char* modifiedJSON = modifyMessageContent(jsonBody, userPrompt);
+		free(userPrompt);
+		free(jsonBody);
+
 		char* jsonResponse = queryLLM(modifiedJSON);
 		char** responseValues = extractValuesFromJson(getMessageContent(jsonResponse));
+		free(jsonResponse);
 
 		int newVert = atoi(responseValues[0]);
 		int newDir = convertBoolToInt(responseValues[1]);
+		free(responseValues);
 		
 		inputs = (int*)malloc(3 * sizeof(int));
 		inputs[0] = newVert;
@@ -39,9 +44,13 @@ int main(int argc, char** argv){
 
 		char* jsonBody = getJSONFromFile("data/generationRequest.json");
 		char* modifiedJSON = modifyMessageContent(jsonBody, graphCreationPrompt);
+		free(jsonBody);
+		free(graphCreationPrompt);
 
 		char* jsonResponse = queryLLM(modifiedJSON);
 		extractGraphArray(getMessageContent(jsonResponse), neighbours, edge * edge);
+		free(modifiedJSON);
+		free(jsonResponse);
 
 		saveGraph(neighbours, edge);
 		return 0;
