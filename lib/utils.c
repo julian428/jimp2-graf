@@ -36,7 +36,7 @@ void saveGraph(int* graph, int sideLength){
 
 	FILE* graphFile = fopen(fileName, "w");
 	if(graphFile == NULL){
-		perror("Couldn't create file %s", fileName);
+		perror("Couldn't create file");
 		return;
 	}
 	
