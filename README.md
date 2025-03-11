@@ -96,7 +96,38 @@ Po chwili czekania na odpowiedź plik z macierzą zostanie zapisany.
 3 0000
 ```
 
-Niestety jak widać poprawność macierzy zależy głównie od tego jaki llm mamy zainstalowany. W typ przypadku użyłem [jmcastagnetto/deepseek-r1-distill-llama-8b](https://ollama.com/jmcastagnetto/deepseek-r1-distill-llama-8b).
+Niestety jak widać poprawność macierzy zależy głównie od tego jaki llm mamy zainstalowany. W typ przypadku użyłem [jmcastagnetto/deepseek-r1-distill-llama-8b](https://ollama.com/jmcastagnetto/deepseek-r1-distill-llama-8b) oraz od języka którym wysyłamy zapytanie.
+
+---
+
+Jeżeli wiemy jakimi zwrotami najczęściej będzie się zwracać użytkownik możemy zmienić nazwę parametrów w plikach z zapytanniami json.
+
+```json
+"properties": {
+			"vertesies": {
+				"type": "integer"
+			},
+			"directional": {
+				"type": "boolean"
+			}
+		},
+
+```
+
+na przykład zamiast 'vertesies' 'edges' będzie używany częściej czyli:
+
+```json
+"properties": {
+	    ~~"vertesies": {~~
+            "edges": {
+				"type": "integer"
+			},
+			"directional": {
+				"type": "boolean"
+			}
+		},
+
+```
 ## Zmiana używanego modelu llm
 
 #### Dla generowania parametrów z proźby
