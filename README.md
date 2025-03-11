@@ -15,7 +15,7 @@ Pobierz projekt
 
 W pobranym folderze
 
-Do kompilacji programu potrzebne jest [nix-shell](https://nixos.org/download/#nix-install-windows)
+Do kompilacji programu potrzebne jest [nix-shell](https://nixos.org/download/#nix-install-windows) oraz połączenie z internetem.
 
 ```bash
   make
@@ -129,4 +129,37 @@ Należy zmienić wartość __model__ na wybrany model llm.
 {
   "model": "jmcastagnetto/deepseek-r1-distill-llama-8b"
 }
+```
+
+#### Struktura pliku z grafem.
+
+```bash
+|
+0 0101
+1 0010
+2 0000
+3 0110
+```
+
+W pierwszej kolumnie macierzy znajduje się informacja o wierzchołku który jest opisywany.
+
+---
+
+```bash
+  ||||
+0 0101
+1 0010
+2 0000
+3 0110
+```
+
+Kolejne n wartości w wierszu oznacza czy aktualny wierzchołek jest połączony z innym wierzchołkiem, są one numerowane tak samo:
+
+```bash
+  0123
+  ||||
+0 0101
+1 0010
+2 0000
+3 0110
 ```
