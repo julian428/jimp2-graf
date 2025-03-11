@@ -10,7 +10,7 @@ Program generuje macierz sąsiedztwa na podstawie danych podanych przez użytkow
 Pobierz projekt
 
 ```bash
-  git clone https://github.com/julian428/jimp2-graf.git
+  git clone https://github.com/julian428/jimp2-graf
 ```
 
 W pobranym folderze
