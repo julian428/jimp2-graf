@@ -118,7 +118,7 @@ na przykład zamiast 'vertesies' 'edges' będzie używany częściej czyli:
 
 ```json
 "properties": {
-	    ~~"vertesies": {~~
+			~~ "vertesies": { ~~
             "edges": {
 				"type": "integer"
 			},
@@ -193,4 +193,26 @@ Kolejne n wartości w wierszu oznacza czy aktualny wierzchołek jest połączony
 1 0010
 2 0000
 3 0110
+```
+
+#### Zapisanie do pliku.
+
+Program automatycznie zapisuje macierz sąsiedztwa do pliku o nazwie `graph-dd.mm.YYYY@HH:MM.txt`.
+
+Gdzie:
+
+__dd__ - dzień
+
+__mm__ - miesiąc
+
+__YYYY__ - rok
+
+__HH__ - godziny
+
+__MM__ - minuty
+
+np.: 
+
+```bash
+graph-11.03.2025@11:21.txt
 ```
