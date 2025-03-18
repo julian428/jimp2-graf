@@ -216,3 +216,5 @@ np.:
 ```bash
 graph-11.03.2025@11:21.txt
 ```
+
+__!Nazwa pliku do którego zapisany został aktualny graf jest wypisywana przez program!__
