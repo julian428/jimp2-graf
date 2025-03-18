@@ -39,6 +39,8 @@ void saveGraph(int* graph, int sideLength){
 		perror("Couldn't create file");
 		return;
 	}
+
+	printf("%s", fileName);
 	
 	for(int i = 0; i < sideLength; i++){
 		fprintf(graphFile, "%d ", i);
