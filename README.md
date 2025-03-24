@@ -1,4 +1,3 @@
-
 # Graf jimp2
 
 Program generuje macierz sąsiedztwa na podstawie danych podanych przez użytkownika. Możliwe jest podawania danych w postaci liczbowej lub tekstowej.
@@ -22,6 +21,7 @@ Do kompilacji programu potrzebne jest [nix-shell](https://nixos.org/download/#ni
 ```
 
 #### Dla funkcjonalności llm
+
 ```bash
 ollama serve
 ```
@@ -35,6 +35,7 @@ ollama serve
 Powyższe polecenie wygeneruje losową macierz sąsiedztwa. Ten graf nie jest skierowany.
 
 Macierz z zapisanego pliku:
+
 ```text
 0 011100
 1 100111
@@ -51,7 +52,7 @@ Macierz z zapisanego pliku:
 ./graph 6 0 0
 ```
 
-Pierwsza liczba musi być dodatnią liczbą całkowitą i wskazuje ona na liczbę krawędzi grafu.
+Pierwsza liczba musi być dodatnią liczbą całkowitą i wskazuje ona na liczbę wierzchołków grafu.
 
 ---
 
@@ -60,13 +61,13 @@ Pierwsza liczba musi być dodatnią liczbą całkowitą i wskazuje ona na liczb�
 ./graph 6 0 0
 ```
 
-Druga liczba może być __0__, __1__ albo __2__ i wskazuje na to czy:
+Druga liczba może być **0**, **1** albo **2** i wskazuje na to czy:
 
-__0__ - macierz generowana losowo.
+**0** - macierz generowana losowo.
 
-__1__ - macierz podawana przez użytkownika.
+**1** - macierz podawana przez użytkownika.
 
-__2__ - macierz generowana przez LLM.
+**2** - macierz generowana przez LLM.
 
 ---
 
@@ -75,16 +76,16 @@ __2__ - macierz generowana przez LLM.
 ./graph 6 0 0
 ```
 
-Trzecia liczba może być __0__ albo __1__ gdzie:
+Trzecia liczba może być **0** albo **1** gdzie:
 
-__0__ - graf nie skierowany.
+**0** - graf nie skierowany.
 
-__1__ - graf skierowany.
+**1** - graf skierowany.
 
-### Zamiast liczb można napisać proźbę
+### Zamiast liczb można napisać prośbę
 
 ```bash
-./graph Stwórz graf z 6 krawędziami który jest skierowany
+./graph Stwórz graf z 6 wierzchołkami który jest skierowany
 ```
 
 Po chwili czekania na odpowiedź plik z macierzą zostanie zapisany.
@@ -128,6 +129,7 @@ na przykład zamiast 'vertesies' 'edges' będzie używany częściej czyli:
 		},
 
 ```
+
 ## Zmiana używanego modelu llm
 
 #### Dla generowania parametrów z proźby
@@ -138,7 +140,7 @@ otwórz plik
 ścieżka_do_programu/data/inputRequest.json
 ```
 
-Należy zmienić wartość __model__ na wybrany model llm.
+Należy zmienić wartość **model** na wybrany model llm.
 
 ```json
 {
@@ -154,7 +156,7 @@ otwórz plik
 ścieżka_do_programu/data/generationRequest.json
 ```
 
-Należy zmienić wartość __model__ na wybrany model llm.
+Należy zmienić wartość **model** na wybrany model llm.
 
 ```json
 {
@@ -201,20 +203,20 @@ Program automatycznie zapisuje macierz sąsiedztwa do pliku o nazwie `graph-dd.m
 
 Gdzie:
 
-__dd__ - dzień
+**dd** - dzień
 
-__mm__ - miesiąc
+**mm** - miesiąc
 
-__YYYY__ - rok
+**YYYY** - rok
 
-__HH__ - godziny
+**HH** - godziny
 
-__MM__ - minuty
+**MM** - minuty
 
-np.: 
+np.:
 
 ```bash
 graph-11.03.2025@11:21.txt
 ```
 
-__!Nazwa pliku do którego zapisany został aktualny graf jest wypisywana przez program!__
+**!Nazwa pliku do którego zapisany został aktualny graf jest wypisywana przez program!**
